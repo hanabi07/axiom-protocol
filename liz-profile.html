@@ -63,7 +63,7 @@
             transform: rotateY(180deg);
         }
         
-        /* 'LIZ' 이름에만 글리치 효과 적용 */
+        /* 이름에만 글리치 효과 */
         .info-text { position: relative; }
         .name { position: relative; }
         .name::before, .name::after { content: attr(data-text); position: absolute; top: 0; width: 100%; text-align: center; overflow: hidden; opacity: 0; mix-blend-mode: screen; animation-fill-mode: forwards; }
@@ -109,7 +109,7 @@
         
         .signature-section { 
             text-align: center;
-            margin-top: 25px; /* [최종 수정] 위쪽 여백을 주어 서명 코드를 아래로 내립니다. */
+            margin-top: 25px;
         }
         .signature-code {
             font-family: 'Orbitron', sans-serif;
@@ -123,8 +123,8 @@
         
         .authorization-block {
             position: absolute;
-            bottom: 70px; /* 플립 버튼 바로 위 */
-            right: 20px;  /* 오른쪽 패딩과 일치 */
+            bottom: 70px; 
+            right: 20px;  
             text-align: right;
         }
         .auth-signature { font-family: 'Dancing Script', cursive; font-size: 24px; color: #c93d3d; transform: rotate(-5deg); margin-bottom: 5px; }
@@ -178,4 +178,5 @@
         </div>
     </div>
 </body>
+
 </html>
