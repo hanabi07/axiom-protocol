@@ -131,20 +131,12 @@
         .terminal-content-wrapper {
             position: relative;
             padding: 25px 30px;
-            min-height: 380px;
         }
 
         .faction-panel {
-            position: absolute;
-            top: 25px;
-            left: 30px;
-            right: 30px;
-            bottom: 25px;
+            display: none; /* 핵심 변경 1: 기본적으로 패널을 공간 차지 없이 숨김 */
             color: #b0b0b0;
             line-height: 1.8;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease-in-out;
         }
 
         .faction-panel-title {
@@ -247,13 +239,13 @@
             text-shadow: 0 0 5px #ff8a8a;
         }
 
+        /* 핵심 변경 2: 선택된 패널을 보이게 하고, 부모의 높이가 자동으로 조절되게 함 */
         #show-axiom:checked~.terminal-content-wrapper .panel-axiom,
         #show-executor:checked~.terminal-content-wrapper .panel-executor,
         #show-command:checked~.terminal-content-wrapper .panel-command,
         #show-freecities:checked~.terminal-content-wrapper .panel-freecities,
         #show-classified:checked~.terminal-content-wrapper .panel-classified {
-            opacity: 1;
-            visibility: visible;
+            display: block;
         }
 
         /* --- 반응형 디자인 (휴대용 단말기) 프로토콜 --- */
@@ -273,7 +265,6 @@
 
             .terminal-controls {
                 grid-template-columns: 1fr;
-                /* 버튼을 세로로 쌓음 */
             }
 
             .toggle-button {
@@ -286,8 +277,6 @@
             }
 
             .terminal-content-wrapper {
-                min-height: 480px;
-                /* 세로로 길어진 콘텐츠에 맞춰 높이 조정 */
                 padding: 20px 15px;
             }
 
