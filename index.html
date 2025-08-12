@@ -232,7 +232,6 @@
             color: #fff;
         }
 
-        /* 활성화된 버튼 스타일 */
         #show-axiom:checked~.terminal-controls label[for="show-axiom"],
         #show-executor:checked~.terminal-controls label[for="show-executor"],
         #show-command:checked~.terminal-controls label[for="show-command"],
@@ -242,14 +241,12 @@
             text-shadow: 0 0 5px #fff;
         }
 
-        /* CLASSIFIED 버튼 활성화 스타일 */
         #show-classified:checked~.terminal-controls label[for="show-classified"] {
             background-color: #a13030;
             color: #fff;
             text-shadow: 0 0 5px #ff8a8a;
         }
 
-        /* 선택된 패널 보이기 */
         #show-axiom:checked~.terminal-content-wrapper .panel-axiom,
         #show-executor:checked~.terminal-content-wrapper .panel-executor,
         #show-command:checked~.terminal-content-wrapper .panel-command,
@@ -257,6 +254,50 @@
         #show-classified:checked~.terminal-content-wrapper .panel-classified {
             opacity: 1;
             visibility: visible;
+        }
+
+        /* --- 반응형 디자인 (휴대용 단말기) 프로토콜 --- */
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+                gap: 30px;
+            }
+
+            .axiom-intro-card .title-main {
+                font-size: 24px;
+            }
+
+            .axiom-intro-card .content-cell {
+                font-size: 14px;
+            }
+
+            .terminal-controls {
+                grid-template-columns: 1fr;
+                /* 버튼을 세로로 쌓음 */
+            }
+
+            .toggle-button {
+                border-left: none;
+                border-top: 1px solid #333;
+            }
+
+            .toggle-button:first-child {
+                border-top: none;
+            }
+
+            .terminal-content-wrapper {
+                min-height: 480px;
+                /* 세로로 길어진 콘텐츠에 맞춰 높이 조정 */
+                padding: 20px 15px;
+            }
+
+            .faction-panel-title {
+                font-size: 20px;
+            }
+
+            .faction-panel {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -294,7 +335,7 @@
 
 
     <div class="faction-terminal">
-        <input type="radio" name="faction-toggle" id="show-axiom" checked="">
+        <input type="radio" name="faction-toggle" id="show-axiom" checked>
         <input type="radio" name="faction-toggle" id="show-executor">
         <input type="radio" name="faction-toggle" id="show-command">
         <input type="radio" name="faction-toggle" id="show-freecities">
