@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIOM - Induction Protocol</title>
+
+    <!-- Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0a0a0c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 50px;
+            padding: 50px 20px;
+            margin: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- 소개 카드 스타일 --- */
+        .axiom-intro-card {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid #555;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 10px #0a0a0c;
+            color: #a0a0a0;
+            background-color: #1a1c20;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .axiom-intro-card th,
+        .axiom-intro-card td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        .axiom-intro-card tr:last-child td {
+            border-bottom: none;
+        }
+
+        .axiom-intro-card .title-cell {
+            padding: 25px;
+            text-align: center;
+            border-bottom: 2px solid #c93d3d;
+        }
+
+        .axiom-intro-card .title-main {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 3px;
+            text-shadow: 0 0 5px #c93d3d, 0 0 10px #c93d3d;
+        }
+
+        .axiom-intro-card .title-sub {
+            font-size: 14px;
+            color: #aaa;
+            margin-top: 8px;
+            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .axiom-intro-card .section-header {
+            padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: #04d9ff;
+            text-shadow: 0 0 8px rgba(4, 217, 255, 0.5);
+            background-color: rgba(4, 217, 255, 0.05);
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+
+        .axiom-intro-card .content-cell {
+            line-height: 1.7;
+        }
+
+        .axiom-intro-card .keyword-red {
+            color: #c93d3d;
+            font-weight: bold;
+        }
+
+        .axiom-intro-card .keyword-blue {
+            color: #3d99c9;
+            font-weight: bold;
+        }
+
+        .axiom-intro-card .status-cell {
+            text-align: center;
+            padding: 20px;
+            font-family: 'Orbitron', sans-serif;
+            color: #888;
+            letter-spacing: 2px;
+            font-size: 12px;
+            border-top: 1px solid #555;
+        }
+
+        /* --- 세력 분석 단말기 스타일 --- */
+        .faction-terminal {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            background-color: #1a1c20;
+            border: 1px solid #555;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 10px #0a0a0c;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .faction-terminal input {
+            display: none;
+        }
+
+        .terminal-content-wrapper {
+            position: relative;
+            padding: 25px 30px;
+            min-height: 380px;
+        }
+
+        .faction-panel {
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            right: 30px;
+            bottom: 25px;
+            color: #b0b0b0;
+            line-height: 1.8;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .faction-panel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .faction-panel-title .keyword-red {
+            color: #c93d3d;
+        }
+
+        .faction-panel-title .keyword-blue {
+            color: #3dd9c9;
+        }
+
+        .faction-panel-title .keyword-gray {
+            color: #888;
+        }
+
+        .faction-panel-title .keyword-yellow {
+            color: #f0e68c;
+        }
+
+        .faction-panel b {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .faction-panel ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 20px;
+        }
+
+        .faction-panel li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #b0b0b0;
+        }
+
+        .panel-classified li {
+            font-family: 'Orbitron', monospace;
+            color: #d0b0b0;
+        }
+
+        .faction-panel li::before {
+            content: '■';
+            position: absolute;
+            left: 0;
+            color: #c93d3d;
+            font-size: 10px;
+            top: 5px;
+        }
+
+        .terminal-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            border-top: 1px solid #555;
+        }
+
+        .toggle-button {
+            padding: 15px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: #888;
+            background-color: #111316;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 1px solid #333;
+        }
+
+        .toggle-button:first-child {
+            border-left: none;
+        }
+
+        .toggle-button:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* 활성화된 버튼 스타일 */
+        #show-axiom:checked~.terminal-controls label[for="show-axiom"],
+        #show-executor:checked~.terminal-controls label[for="show-executor"],
+        #show-command:checked~.terminal-controls label[for="show-command"],
+        #show-freecities:checked~.terminal-controls label[for="show-freecities"] {
+            background-color: #c93d3d;
+            color: #fff;
+            text-shadow: 0 0 5px #fff;
+        }
+
+        /* CLASSIFIED 버튼 활성화 스타일 */
+        #show-classified:checked~.terminal-controls label[for="show-classified"] {
+            background-color: #a13030;
+            color: #fff;
+            text-shadow: 0 0 5px #ff8a8a;
+        }
+
+        /* 선택된 패널 보이기 */
+        #show-axiom:checked~.terminal-content-wrapper .panel-axiom,
+        #show-executor:checked~.terminal-content-wrapper .panel-executor,
+        #show-command:checked~.terminal-content-wrapper .panel-command,
+        #show-freecities:checked~.terminal-content-wrapper .panel-freecities,
+        #show-classified:checked~.terminal-content-wrapper .panel-classified {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table class="axiom-intro-card">
+        <tbody>
+            <tr>
+                <td colspan="2" class="title-cell">
+                    <div class="title-main">EXECUTOR INDUCTION</div>
+                    <div class="title-sub">FILE: PENUMBRA-77 // RECRUIT PROTOCOL</div>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2" class="section-header">상황 개요 (SITUATION BRIEFING)</th>
+            </tr>
+            <tr>
+                <td colspan="2" class="content-cell">72년 전, 원인 불명의 파동—대균열이라 불림—으로 인류 문명은 붕괴되었다. 현실과 집단 무의식의 경계가 무너지며 세상은 꿈의 법칙이 지배하는 혼돈에 잠겼고, 그 격변 속에서 모든 인간의 정신에는 <b>낙인(Stigma)</b>이라는 고유 이능력이 새겨졌다. 이 힘이 야기한 혼돈을 바로잡고 유일한 질서를 세운 것이 바로 거대 통치 조직, <span class="keyword-red">액시엄</span>이다.</td>
+            </tr>
+            <tr>
+                <th colspan="2" class="section-header">임무 강령: 황혼 (MANDATE: PENUMBRA)</th>
+            </tr>
+            <tr>
+                <td colspan="2" class="content-cell">황혼 수색대에 온 것을 환영한다, 신입. 하지만 축하는 생략하지. 이곳은 영광을 좇는 자들의 무덤이니까. 우리가 마주하는 것은 어제의 동료이자, 자신의 낙인에 잠식당한 괴물—'망실자'들이다. 네 총구가 언젠가 향할 곳이 바로 우리 자신이라는 사실을, 단 한 순간도 잊지 마라.</td>
+            </tr>
+            <tr>
+                <th colspan="2" class="section-header">최종 지령 (FINAL DIRECTIVE)</th>
+            </tr>
+            <tr>
+                <td colspan="2" class="status-cell">아래 단말기에서 주요 세력 및 기밀 정보를 숙지하고, 첫 번째 지령을 대기하라.</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="faction-terminal">
+        <input type="radio" name="faction-toggle" id="show-axiom" checked="">
+        <input type="radio" name="faction-toggle" id="show-executor">
+        <input type="radio" name="faction-toggle" id="show-command">
+        <input type="radio" name="faction-toggle" id="show-freecities">
+        <input type="radio" name="faction-toggle" id="show-classified">
+
+        <div class="terminal-content-wrapper">
+            <div class="faction-panel panel-axiom">
+                <div class="faction-panel-title">FILE 01: <span class="keyword-red">AXIOM</span> & STIGMA</div>
+                <p><b>액시엄(AXIOM)</b>은 대균열 이후의 혼돈을 통제하는 유일한 절대 권력이다. 수도 <b>제니스</b>를 중심으로 한 질서 구역을 철권 통치하며, 모든 시민의 이능력 낙인을 체계적으로 관리하고 감시한다. 액시엄에게 질서는 최상의 가치이며, 이를 위해 개인의 자유와 사상은 언제든 억제될 수 있는 부차적 요소로 취급된다.</p>
+            </div>
+            <div class="faction-panel panel-executor">
+                <div class="faction-panel-title">FILE 02: <span class="keyword-blue">EXECUTORS</span> & THE LOST</div>
+                <p><b>집행관(Executor)</b>은 혼돈으로부터 시민을 보호하는 인류 최후의 보루이자, 액시엄의 질서를 관철하는 조직이다. 이들은 낙인을 발현하고 제어하는 데 성공한 이능력자로 구성되며, <b>황혼 수색대</b>는 과거에 집행관이었으나 현재는 망실자가 되어버린 옛 동료를 처리하는 극비 부대이다.</p>
+            </div>
+            <div class="faction-panel panel-command">
+                <div class="faction-panel-title">FILE 03: <span class="keyword-blue">EXECUTOR</span> COMMAND</div>
+                <p>집행관은 액시엄의 군사력을 총괄하는 집행 사령부 산하에 소속되며, 현존 부대는 다음과 같다. 각 부대는 고유의 역할과 책임을 부여받는다.</p>
+                <ul>
+                    <li><b>제1 강습군단 "펄서":</b> 고위험 구역으로의 강습 및 활로 개척을 전담하는 액시엄의 창.</li>
+                    <li><b>제3 기동군단 "트랜지언트":</b> 광범위한 파쇄지를 순찰하며 위협에 가장 먼저 대응하는 신속 대응 부대.</li>
+                    <li><b>제5 주둔군단 "카이퍼":</b> 수도와 주요 질서 구역의 방어를 책임지는 액시엄의 방패.</li>
+                    <li><b>제7 전술지원부대:</b> 특정 군단에 소속되지 않고 전황에 따라 유동적으로 지원 임무를 수행.</li>
+                    <li><b>황혼 수색대 "페넘브라":</b> 공식 조직도에는 존재하지 않는 집행 사령부 직속의 극비 부대.</li>
+                </ul>
+            </div>
+            <div class="faction-panel panel-freecities">
+                <div class="faction-panel-title">FILE 04: <span class="keyword-gray">FREE CITIES</span> & THE SHATTERED LANDS</div>
+                <p>액시엄의 통제가 닿지 않는 광활한 무법지대, <b>파쇄지</b>는 '대균열'이 남긴 상처 그 자체다. 이곳에서는 중력이 멋대로 역전되거나 과거의 환영이 유령처럼 떠도는 등, 현실 왜곡 현상인 <b>잔향</b>이 상시적으로 발생하고 있다. 이 위험천만한 땅에는 액시엄의 질서를 거부하는 자들이 세운 <b>자유 도시</b>가 존재한다. 그들은 잔향이 넘실거리는 혼돈 속에서 각자의 생존 법칙을 만들며 액시엄과 대립하여 살아가고 있다.</p>
+            </div>
+            <div class="faction-panel panel-classified">
+                <div class="faction-panel-title">FILE 05: <span class="keyword-yellow">LOST LEGIONS</span> [CLASSIFIED]</div>
+                <p>액시엄 집행 사령부의 짝수 번호 군단들은 영구 결번 상태다. 대외적으로는 건국 초기에 희생된 영웅 부대들을 기리기 위함이라 알려져 있지만, 그 이면에는 액시엄의 완벽한 통제가 거짓임을 증명하는 실패와 은폐의 기록이 숨겨져 있다.</p>
+                <ul>
+                    <li><b>제2군단 [비극]:</b> 최초의 거대 '망실자 군주'와 교전, 부대 전멸을 대가로 수도 방어.</li>
+                    <li><b>제4군단 [오염]:</b> 파쇄지 심연에서 집단 망실화, 현재는 뒤틀린 '망실자 부족'으로 변질.</li>
+                    <li><b>제6군단 [숙청]:</b> 건국 초기 권력 다툼에서 반란, 내부안보국에 의해 존재 기록 말소.</li>
+                    <li><b>제8군단 [소멸]:</b> 대균열의 진실을 추적하다 '무의 진원지'에서 인과율 소멸.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="terminal-controls">
+            <label for="show-axiom" class="toggle-button">AXIOM</label>
+            <label for="show-executor" class="toggle-button">EXECUTORS</label>
+            <label for="show-command" class="toggle-button">COMMAND</label>
+            <label for="show-freecities" class="toggle-button">FREE CITIES</label>
+            <label for="show-classified" class="toggle-button">CLASSIFIED</label>
+        </div>
+    </div>
+
+</body>
+
+</html>
